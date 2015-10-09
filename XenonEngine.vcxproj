@@ -149,6 +149,14 @@
     <None Include="Projektplanung\Enginestruktur.class.violet.html" />
     <None Include="Projektplanung\Laufzeitdiagramm.class.violet.html" />
   </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="XeException.hpp" />
+    <ClInclude Include="XeInterface.hpp" />
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="XeException.cpp" />
+    <ClCompile Include="XeInterface.cpp" />
+  </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
   </ImportGroup>
