@@ -11,28 +11,30 @@
 /* Autor		 <Luc Arne Wengoborski>													*/
 /*																						*/
 /* Diese Datei ist Teil der Software: XenonEngine										*/
-/* Inhalt		 <Interface der XenonEngine>											*/
+/* Inhalt		 <Implementation des XeErrorHandlers, welcher sich um die Verwaltung	*/
+/*				  und Verarbeitung aller geworfenen Exceptions kümmert>					*/
 /* ------------------------------------------------------------------------------------ */
 /* ------------------------------------------------------------------------------------ */
+
 #pragma once
 
 // Dll-Export
 #define XeDll __declspec(dllexport)
 
-// Vorwärtsdeklaration
-class XeErrorHandler;
+// Vorwärtsdeklarationen
+class XeException;
 
-class XeInterface
+class XeErrorHandler
 {
 public:
-	XeDll XeInterface();
-	XeDll ~XeInterface();
-	XeDll static XeInterface* getInterface();
+	XeDll XeErrorHandler();
+	XeDll ~XeErrorHandler();
+	XeDll void handle(XeException&);
 
 private:
-	static XeInterface* _interface;
+	__int16	_excnum;	// Anzahl der gemeldeten Exceptions
+	__int16 _passnum;   // Anzahl der gemeldeten Exceptions mit _code == Exc_Pass
 
-public:
-	XeErrorHandler*     _error_handler;
 };
 
+#define XeCatch catch(XeException & e){ XeInterface::getInterface()->_error_handler->handle(e); }

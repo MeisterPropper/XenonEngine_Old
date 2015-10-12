@@ -1,9 +1,12 @@
 #include "XeInterface.hpp"
 #include "XeException.hpp"
+#include "XeErrorHandler.hpp"
 
 
 XeInterface::XeInterface()
 {
+	// ErrorHandler initialisieren
+	_error_handler = new XeErrorHandler();
 }
 
 
@@ -20,7 +23,6 @@ XeInterface * XeInterface::getInterface()
 		_interface = new XeInterface();
 	}
 
-	XeThrowException(XeExcBadAlloc, "Hallo", 0x0);
 	// Zeiger auf die Instanz zurückgeben
 	return _interface;
 

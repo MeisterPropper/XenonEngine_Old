@@ -4,31 +4,32 @@
 
 
 
-XeException::XeException(char * _msg) : _msg(_msg)
+XeException::XeException(char * msg) : _msg(msg)
 {
 	// Alle Zuweisungen finden in der Initialisiererliste statt
 }
 
-XeException::XeException(char * _msg, long _code) : _msg(_msg), _code(_code)
+XeException::XeException(char * msg, long code) : _msg(msg), _code(code)
 {
 	// Alle Zuweisungen finden in der Initialisiererliste statt
 }
 
-XeException::XeException(char * _msg, long _code, char * _func, char * _file, __int32 _line) : _code(_code)
+XeException::XeException(char * msg, long code, char * func, char * file, __int32 line) : _msg(msg), _code(code),
+_file(file), _func(func)
 {
-	// Puffer für die formatierte Nachricht
-	char * buf = (char*)malloc(1024);
-	// Nachricht vormatieren
-	__int32 i = sprintf_s(buf, 1024, "%s in %s in %s in Zeile %d", _msg, _func, _file, _line);
-#ifdef _DEBUG
-	if (i < 0)
-	{
-		// Wenn kein Speicher reserviert wurde, Exception werfen
-		throw(XeExcNullPtr("Fehler beim Werfen einer Exception wegen Speicherproblemen", -1));
-	}
-#endif
-	// Zuweisen
-	this->_msg = buf;
+	// Alle Zuweisungen bis auf _line in der Initialisiererliste
+	// Für _line Speicher anfordern und den Wert von line zuweisen
+	_line = malloc(sizeof(__int32));
+	*((__int32*)_line) = line;
+}
+
+XeException::XeException(char * msg, long code, char * func, char * file, __int32 line, void ** args) : _msg(msg), _code(code),
+_file(file), _func(func), _args(args)
+{
+	// Alle Zuweisungen bis auf _line in der Initialisiererliste
+	// Für _line Speicher anfordern und den Wert von line zuweisen
+	_line = malloc(sizeof(__int32));
+	*(__int32*)_line = line;
 }
 
 

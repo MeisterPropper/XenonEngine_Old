@@ -89,6 +89,8 @@
       <Optimization>Disabled</Optimization>
       <PreprocessorDefinitions>WIN32;_DEBUG;_WINDOWS;_USRDLL;XENONENGINE_EXPORTS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <SDLCheck>true</SDLCheck>
+      <MultiProcessorCompilation>false</MultiProcessorCompilation>
+      <ControlFlowGuard>false</ControlFlowGuard>
     </ClCompile>
     <Link>
       <SubSystem>Windows</SubSystem>
@@ -150,10 +152,15 @@
     <None Include="Projektplanung\Laufzeitdiagramm.class.violet.html" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="XeErrorHandler.hpp">
+      <SubType>
+      </SubType>
+    </ClInclude>
     <ClInclude Include="XeException.hpp" />
     <ClInclude Include="XeInterface.hpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="XeErrorHandler.cpp" />
     <ClCompile Include="XeException.cpp" />
     <ClCompile Include="XeInterface.cpp" />
   </ItemGroup>

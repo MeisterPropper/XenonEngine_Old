@@ -32,12 +32,18 @@
     <ClInclude Include="XeException.hpp">
       <Filter>Headerdateien</Filter>
     </ClInclude>
+    <ClInclude Include="XeErrorHandler.hpp">
+      <Filter>Headerdateien</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="XeInterface.cpp">
       <Filter>Quelldateien</Filter>
     </ClCompile>
     <ClCompile Include="XeException.cpp">
+      <Filter>Quelldateien</Filter>
+    </ClCompile>
+    <ClCompile Include="XeErrorHandler.cpp">
       <Filter>Quelldateien</Filter>
     </ClCompile>
   </ItemGroup>
