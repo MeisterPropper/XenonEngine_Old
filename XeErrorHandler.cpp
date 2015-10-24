@@ -1,18 +1,20 @@
 #include "XeErrorHandler.hpp"
 #include "XeException.hpp"
+#include "XeLogfile.hpp"
+#include "XeInterface.hpp"
 #include <assert.h>
 #include <string>
 #include <Windows.h>
 
-XeErrorHandler::XeErrorHandler() : _excnum(0)
+XeErrorHandler::XeErrorHandler() : _excnum(0), _passnum(0)
 {
 	// Alle Zuweisungen in der Initialisiererliste
 }
 
 XeErrorHandler::~XeErrorHandler()
 {
-	// TODO:
-	// Logfileeintrag schreiben
+	// Schlussnachricht in das Logfile schreiben
+	const_cast<XeLogfile*>(XeInterface::getInterface_internal()->log())->write("ErrorHandler wird heruntergefahren\n\t\tExceptions insgesamt %d\n\t\tDavon unbehandelt: %d", this->_excnum, this->_passnum);
 }
 
 void XeErrorHandler::handle(XeException & exception)
@@ -25,16 +27,15 @@ void XeErrorHandler::handle(XeException & exception)
 	{
 	case XeExc_Pass:
 	{
-		// Nichts weiter machen, ist dazu da,
+		// Nichts weiter machen, Zweck ist,
 		// die Exception als "behandelt" zu sehen
 		// Anzahl der durchgelassenen Exceptions erhöhen
 		++_passnum;
 	}break;
 	case XeExc_Log:
 	{
-		// TODO:
-		// Eintrag in das Logfile schreiben
-		++_excnum;	// Anzahl der gemeldeten Exception erhöhen
+		// Nachricht in das Logfile
+		const_cast<XeLogfile*>(XeInterface::getInterface_internal()->log())->write("Eine Exception %s wurde gewurfen: %s", (char*)exception._type, exception._msg);
 	}break;
 	case XeExc_Abort:
 	{
@@ -52,34 +53,35 @@ void XeErrorHandler::handle(XeException & exception)
 	}break;
 	case XeExc_Msg:
 	{
+		// MessageBox
 		MessageBoxA(nullptr, exception._msg, "Exception", MB_OK | MB_ICONWARNING);
-		// TODO:
-		// 1. Nachricht in Form einer MessageBox ausgeben
-		// 2. Eintrag in das Logfile schreiben
+		// Nachricht in das Logfile schreiben
+		const_cast<XeLogfile*>(XeInterface::getInterface_internal()->log())->write("Eine Exception %s wurde gewurfen: %s", (char*)exception._type, exception._msg);
 	}break;
 	case XeExc_Call:
 	{
 		// TODO:
 		// Die Funktion erneut aufrufen
-		++_excnum;	// Anzahl der gemeldeten Exception erhöhen
 	}break;
 	case XeExc_Alloc:
 	{
 		// TODO:
 		// 1. Erneut versuchen, Speicher zu reservieren
-		// 2. Eintrag in das Logfile schreiben
-		++_excnum;	// Anzahl der gemeldeten Exception erhöhen
+		// Nachricht in das Logfile schreiben
+		const_cast<XeLogfile*>(XeInterface::getInterface_internal()->log())->write("Eine Exception %s wurde gewurfen: %s", (char*)exception._type, exception._msg);
 	}break;
 	case XeExc_Try:
 	{
 		// TODO:
 		// 1. Die Funktion erneut aufrufen
-		// 2. Eintrag in das Logbuch schreiben
+		// Nachricht in das Logfile schreiben
+		const_cast<XeLogfile*>(XeInterface::getInterface_internal()->log())->write("Eine Exception %s wurde gewurfen: %s", (char*)exception._type, exception._msg);
 		++_excnum;	// Anzahl der gemeldeten Exception erhöhen
 	}break;
 	default:
 	{
-		++_excnum;	// Anzahl der gemeldeten Exception erhöhen
+		// Nachricht in das Logfile schreiben
+		const_cast<XeLogfile*>(XeInterface::getInterface_internal()->log())->write("Eine Exception %s wurde gewurfen: %s", (char*)exception._type, exception._msg);
 	}break;
 	}
 

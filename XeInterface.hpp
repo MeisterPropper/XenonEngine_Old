@@ -19,20 +19,46 @@
 // Dll-Export
 #define XeDll __declspec(dllexport)
 
+// Code zu String
+#define NameToString(x)	#x
 // Vorwärtsdeklaration
 class XeErrorHandler;
+class XeLogfile;
+class XeClock;
 
 class XeInterface
 {
 public:
+	// Konstruktor
 	XeDll XeInterface();
+	// Destruktor
 	XeDll ~XeInterface();
-	XeDll static XeInterface* getInterface();
+	// Methode zum Initialisieren der Engine. Liefert einen Zeiger auf den statischen
+	// Member _interface zurück, der, wenn er noch nicht initialisiert wurde, hier 
+	// wird initialisiert
+	XeDll static XeInterface*	getInterface();
+	// Fährt die Engine runter. Hierbei wird standardmäßig der Exitcode 0 verwendet.
+	// Die Methode sollte nur verwendet werden, wenn es nicht anders geht, da sie das 
+	// Zurückkehren aus der main() umgeht
+	XeDll void					quit();
+	// Gibt einen Zeiger auf _interafce zurück, ohne auf 0 zu überprüfen. Sollte nur von 
+	// Engine-internen Funktionen aufgerufen werden, da es sonst zu Fehlern kommen kann
+	// WICHTIG: Darf nicht im Konstruktor von XeInterface verwendet werden
+	XeDll static XeInterface*	getInterface_internal();
+	// Gibt einen konstanten Zeiger auf das Logfile zurück
+	XeDll const XeLogfile *		log();
+	// Schreibt einen String in das Logfile
+	XeDll void					log(const char*);
 
 private:
 	static XeInterface* _interface;
+	XeLogfile*			_logfile;
 
 public:
 	XeErrorHandler*     _error_handler;
+	XeClock*			_clock;
+
+private:
+	long				pfnc_postinit();
 };
 

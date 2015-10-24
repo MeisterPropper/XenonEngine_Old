@@ -35,6 +35,15 @@
     <ClInclude Include="XeErrorHandler.hpp">
       <Filter>Headerdateien</Filter>
     </ClInclude>
+    <ClInclude Include="XeLogfile.hpp">
+      <Filter>Headerdateien</Filter>
+    </ClInclude>
+    <ClInclude Include="XeError.hpp">
+      <Filter>Headerdateien</Filter>
+    </ClInclude>
+    <ClInclude Include="XeTime.hpp">
+      <Filter>Headerdateien</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="XeInterface.cpp">
@@ -44,6 +53,15 @@
       <Filter>Quelldateien</Filter>
     </ClCompile>
     <ClCompile Include="XeErrorHandler.cpp">
+      <Filter>Quelldateien</Filter>
+    </ClCompile>
+    <ClCompile Include="XeLogfile.cpp">
+      <Filter>Quelldateien</Filter>
+    </ClCompile>
+    <ClCompile Include="XeError.cpp">
+      <Filter>Quelldateien</Filter>
+    </ClCompile>
+    <ClCompile Include="XeTime.cpp">
       <Filter>Quelldateien</Filter>
     </ClCompile>
   </ItemGroup>

@@ -23,16 +23,19 @@
 // Vorwärtsdeklaration
 class XeErrorHandler;
 
+// Makro für Name zu String
+#define NameToString(x) #x
+
 // Makro für das Werfen von XeExceptions
-#define XeThrowException(_type, _msg, _code) throw((_type(_msg, _code, __FUNCTION__, __FILE__, __LINE__)));
+#define XeThrowException(_type, _msg, _code) throw((_type(_msg, _code, __FUNCTION__, __FILE__, NameToString(_type), __LINE__)));
 
 class XeException
 {
 public:
 	XeDll XeException(char*);
 	XeDll XeException(char*, long);
-	XeDll XeException(char*, long, char*, char*, __int32);
-	XeDll XeException(char*, long, char*, char*, __int32, void**);
+	XeDll XeException(char*, long, char*, char*, char*, __int32);
+	XeDll XeException(char*, long, char*, char*, char*, __int32, void**);
 	XeDll virtual ~XeException();
 
 	XeDll virtual const char* what() const;	// Gibt einen Zeiger auf _msg zurück
@@ -47,6 +50,7 @@ private:
 	void*   _line;	// Enthält, in welcher Zeile die Exception gewurfen wurde
 	void**  _args;	// Zusätzliche Parameter, wie z.B. Zeiger auf Speicher, der
 					// alloziert werden soll
+	char*	_type;	// String mit dem Namen der Exception
 
 	friend class XeErrorHandler;	// Den ErrorHandler als Friend markieren
 };
@@ -55,22 +59,22 @@ class XeExcBadAlloc : public XeException
 {
 public: XeDll XeExcBadAlloc(char* p) : XeException(p) {};
 public: XeDll XeExcBadAlloc(char* p, long l) : XeException(p, l) {};
-public: XeDll XeExcBadAlloc(char* p1, long l, char* p2, char* p3, __int32 i) : XeException(p1, l, p2, p3, i) {};
-public: XeDll XeExcBadAlloc(char* p1, long l, char* p2, char* p3, __int32 i, void** pp) : XeException(p1, l, p2, p3, i, pp) {};
+public: XeDll XeExcBadAlloc(char* p1, long l, char* p2, char* p3, char* p4, __int32 i) : XeException(p1, l, p2, p3, p4, i) {};
+public: XeDll XeExcBadAlloc(char* p1, long l, char* p2, char* p3, char* p4, __int32 i, void** pp) : XeException(p1, l, p2, p3, p4, i, pp) {};
 };
 class XeExcNullPtr : public XeException
 {
 public: XeDll XeExcNullPtr(char* p) : XeException(p) {};
 public: XeDll XeExcNullPtr(char* p, long l) : XeException(p, l) {};
-public: XeDll XeExcNullPtr(char* p1, long l, char* p2, char* p3, __int32 i) : XeException(p1, l, p2, p3, i) {};
-public: XeDll XeExcNullPtr(char* p1, long l, char* p2, char* p3, __int32 i, void** pp) : XeException(p1, l, p2, p3, i, pp) {};
+public: XeDll XeExcNullPtr(char* p1, long l, char* p2, char* p3, char* p4, __int32 i) : XeException(p1, l, p2, p3, p4, i) {};
+public: XeDll XeExcNullPtr(char* p1, long l, char* p2, char* p3, char* p4, __int32 i, void** pp) : XeException(p1, l, p2, p3, p4, i, pp) {};
 };
 class XeExcBadFile : public XeException
 {
 public: XeDll XeExcBadFile(char* p) : XeException(p) {};
 public: XeDll XeExcBadFile(char* p, long l) : XeException(p, l) {};
-public: XeDll XeExcBadFile(char* p1, long l, char* p2, char* p3, __int32 i) : XeException(p1, l, p2, p3, i) {};
-public: XeDll XeExcBadFile(char* p1, long l, char* p2, char* p3, __int32 i, void** pp) : XeException(p1, l, p2, p3, i, pp) {};
+public: XeDll XeExcBadFile(char* p1, long l, char* p2, char* p3, char* p4, __int32 i) : XeException(p1, l, p2, p3, p4, i) {};
+public: XeDll XeExcBadFile(char* p1, long l, char* p2, char* p3, char* p4, __int32 i, void** pp) : XeException(p1, l, p2, p3, p4, i, pp) {};
 };
 
 enum XeExceptionCode
